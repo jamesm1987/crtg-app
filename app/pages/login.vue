@@ -48,13 +48,7 @@ const handleLogin = async (payload: FormSubmitEvent<Schema>) => {
             throw error
         }
 
-        toast.add({
-            title: 'Success',
-            description: 'You are now logged in.',
-            color: 'success'
-        })
-
-        router.push('/dashboard')
+        return navigateTo('/dashboard')
 
     } catch (error: any) {
         

@@ -26,15 +26,10 @@ export default defineNuxtConfig({
     '/admin/**': {ssr: false}
   },
 
-    supabase: {
-        redirectOptions: {
-        login: '/login',
-        callback: '/confirm',
-        include: undefined,
-        exclude: [],
-        saveRedirectToCookie: false,
-    }
+  supabase: {
+    redirect: false
   },
+  
   compatibilityDate: '2025-01-15',
 
   eslint: {

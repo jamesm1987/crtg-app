@@ -1,24 +1,24 @@
-export default defineNuxtRouteMiddleware(async (to) => {
+// export default defineNuxtRouteMiddleware(async (to) => {
     
-    const user = useSupabaseUser()
-    const client = useSupabaseClient()
+//     const user = useSupabaseUser()
+//     const client = useSupabaseClient()
 
 
-    if (!user.value) {
-        return navigateTo('/login')
-    }
+//     if (!user.value) {
+//         return navigateTo('/login')
+//     }
 
-    console.log(user)
+//     console.log(user)
 
-    const { data: profile } = await client
-        .from('profiles')
-        .select('role')
-        .eq('id', user.value.id)
-        .single()
+//     const { data: profile } = await client
+//         .from('profiles')
+//         .select('role')
+//         .eq('id', user.value.id)
+//         .single()
 
-    if (profile?.role !== 'admin') {
-        return navigateTo('/')
-    }
+//     if (profile?.role !== 'admin') {
+//         return navigateTo('/')
+//     }
 
     
 

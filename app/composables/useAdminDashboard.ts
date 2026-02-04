@@ -1,4 +1,4 @@
-export const useProfile = () => {
+export const useAdmin = () => {
     const supabase = useSupabaseClient()
     const user = useSupabaseUser()
 
@@ -22,13 +22,14 @@ export const useProfile = () => {
         }
     }
 
-    const isAdmin = computed(() => user.value?.app_metadata?.role === 'admin')
+    const fetchUserTeams = async () => {
+
+    }
+
 
     return { 
         profile, 
         fetchProfile, 
-        isAdmin, 
         loading,
-        isLoggedIn: computed(() => !!user.value)
     }
 }

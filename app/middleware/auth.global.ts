@@ -4,9 +4,10 @@ export default defineNuxtRouteMiddleware((to) => {
 
     const isPublicPath = ['/', '/login', '/register'].includes(to.path)
 
+
     if (!user.value && !isPublicPath) {
         
-        return navigateTo('/login')
+        // return navigateTo('/login')
     }
 
     if (user.value && to.path === '/login') {

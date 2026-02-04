@@ -1,23 +1,39 @@
 <script setup lang="ts">
 
-    const { activeHeadings, updateHeadings } = useScrollspy()
+import type { NavigationMenuItem } from '@nuxt/ui'
 
-    const items = computed(() => [{
-        label: 'My Teams',
-        to: '/my-teams',
-        active: activeHeadings.value.includes('my-teams')
-    },
-    {
-        label: 'How to play',
-        to: '/#how-to-play',
-        active: activeHeadings.value.includes('#how-to-play')
-    },
-    {
-        label: 'Login',
-        to: '/login',
-        active: activeHeadings.value.includes('login')
-    }
-])
+const route = useRoute()
+const client = useSupabaseClient()
+const { profile, isAdmin, isLoggedIn, fetchProfile } = useProfile()
+
+onMounted(() => {
+    fetchProfile()
+})
+
+const handleLogout = async () => {
+    await client.auth.signOut()
+    profile.value = null
+    navigateTo('/')
+}
+
+
+
+    const items = computed<NavigationMenuItem[]>(() => {
+        const baseItems: NavigationMenuItem[] = [
+            {
+                label: 'My Teams',
+                to:     '/my-teams',
+                active: false
+            },
+            {
+                label: 'How to play',
+                to: '/#how-to-play',
+                active: false
+            }
+        ]
+
+        return baseItems
+    })
     
 
 </script>
@@ -34,6 +50,27 @@
             variant="link"
             class="hidden lg:block"
         />
+
+        <div v-if="isLoggedIn" class="flex items-center gap-2 ml-4 border-l pl-4">
+            <UButton
+              v-if="isAdmin"
+              to="/admin"
+              icon="i-heroicons-wrench-screwdriver"
+              color="orange"
+              variant="ghost"
+              label="Admin"
+              size="sm"
+            />
+            
+            <UButton 
+              label="Logout" 
+              variant="subtle" 
+              size="sm" 
+              @click="handleLogout" 
+            />
+        </div>
+        
+        <UButton v-else to="/login" label="Login" />
       </template>
     </UHeader>
 </template>
